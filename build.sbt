@@ -1,3 +1,5 @@
+import java.io.File
+
 name := "pentaho-gpload-automater"
 
 version := "1.0"
@@ -31,6 +33,20 @@ libraryDependencies ++= Seq(
   "org.eclipse.swt" % swtVersion % "4.3.2" % "provided"
 )
 
+assemblyExcludedJars in assembly := {
+  val cp = (fullClasspath in assembly).value
+  println(cp)
+  val xs = cp filter { x => !x.data.getName.contains("kettle-") }
+  println(xs)
+  xs
+}
+
 scalacOptions += "-deprecation"
 
+val deployTask = TaskKey[Unit]("deploy", "Copies jar to pentaho directory")
+
+deployTask <<= packageBin in Compile map { (pck) =>
+  val local = pck.getPath
+  IO.copyFile(new File(local), new File("""C:\\work\misc\pentaho-kettle\dist\plugins\steve-step-test-1\pentaho-gpload-automater-assembly-1.0.jar"""))
+}
 
