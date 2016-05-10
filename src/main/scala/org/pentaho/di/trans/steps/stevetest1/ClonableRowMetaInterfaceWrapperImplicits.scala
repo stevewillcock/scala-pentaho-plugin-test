@@ -2,7 +2,7 @@ package org.pentaho.di.trans.steps.stevetest1
 
 import org.pentaho.di.core.row.RowMetaInterface
 
-object ClonableRowMetaWrapperImplicits {
+object ClonableRowMetaInterfaceWrapperImplicits {
 
   val cloneMethod = classOf[RowMetaInterface].getMethods.filter(x => x.getName == "clone")
 
