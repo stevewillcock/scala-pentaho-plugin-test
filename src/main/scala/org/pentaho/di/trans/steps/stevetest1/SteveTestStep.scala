@@ -3,7 +3,7 @@ package org.pentaho.di.trans.steps.stevetest1
 import org.pentaho.di.core.RowMetaAndData
 import org.pentaho.di.core.row.{RowDataUtil, ValueMetaInterface}
 import org.pentaho.di.trans.step._
-import org.pentaho.di.trans.steps.stevetest1.RowMetaWrapperImplicits._
+import org.pentaho.di.trans.steps.stevetest1.ClonableRowMetaWrapperImplicits._
 import org.pentaho.di.trans.{Trans, TransMeta}
 
 class SteveTestStep(stepMeta: StepMeta, stepDataInterface: StepDataInterface, copyNr: Int, transMeta: TransMeta, trans: Trans) extends BaseStep(stepMeta, stepDataInterface, copyNr, transMeta, trans) with StepInterface {
@@ -20,7 +20,7 @@ class SteveTestStep(stepMeta: StepMeta, stepDataInterface: StepDataInterface, co
       case Some(row) =>
         if (first) {
           first = false
-          data.outputMeta = getInputRowMeta.klone
+          data.outputMeta = getInputRowMeta.createClone
           data.outputMeta.mergeRowMeta(dataToAppend.getRowMeta, getStepname)
         }
         putRow(data.outputMeta, RowDataUtil.addRowData(row, getInputRowMeta.size, dataToAppend.getData))
